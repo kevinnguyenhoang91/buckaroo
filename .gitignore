@@ -71,3 +71,6 @@ BUCKAROO_DEPS
 
 # Logs
 *.log
+
+#VSCode
+/.vscode/
