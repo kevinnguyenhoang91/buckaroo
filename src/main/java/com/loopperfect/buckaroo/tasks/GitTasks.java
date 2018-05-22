@@ -13,6 +13,7 @@ import io.reactivex.Observable;
 import io.reactivex.Single;
 import org.eclipse.jgit.api.CreateBranchCommand;
 import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider;
 import org.eclipse.jgit.api.LsRemoteCommand;
 import org.eclipse.jgit.api.Status;
 import org.eclipse.jgit.api.errors.GitAPIException;
@@ -62,10 +63,22 @@ public final class GitTasks {
                     }
                 } else {
                     // Clone!
-                    Git.cloneRepository()
+                    String gitUsername = System.getenv("ZALOGIT2_USERNAME");
+                    String gitPassword = System.getenv("ZALOGIT2_PASSWORD");
+
+                    if (gitUsername != null && gitPassword != null) {
+                        Git.cloneRepository()
+                        .setCredentialsProvider(new UsernamePasswordCredentialsProvider(gitUsername, gitPassword))
                         .setURI(commit.url)
                         .setDirectory(directory.toFile())
                         .call();
+                    } else {
+                        Git.cloneRepository()
+                        .setURI(commit.url)
+                        .setDirectory(directory.toFile())
+                        .call();
+                    }
+
                     emitter.onNext(GitCloneEvent.of(commit.url, directory));
                 }
                 // Checkout
@@ -90,10 +103,23 @@ public final class GitTasks {
 
             // The repository is not actually used, JGit just seems to require it.
             final Repository repository = FileRepositoryBuilder.create(Paths.get("").toFile());
-            final Collection<Ref> refs = new LsRemoteCommand(repository)
-                .setRemote(gitURL)
-                .setTags(true)
-                .call();
+
+            String gitUsername = System.getenv("ZALOGIT2_USERNAME");
+            String gitPassword = System.getenv("ZALOGIT2_PASSWORD");
+            
+            Collection<Ref> refs = null;
+            if (gitUsername != null && gitPassword != null) { 
+                refs = new LsRemoteCommand(repository)
+                    .setCredentialsProvider(new UsernamePasswordCredentialsProvider(gitUsername, gitPassword))
+                    .setRemote(gitURL)
+                    .setTags(true)
+                    .call();
+            } else {
+                refs = new LsRemoteCommand(repository)
+                    .setRemote(gitURL)
+                    .setTags(true)
+                    .call();
+            }
 
             final String prefix = "refs/tags/";
 

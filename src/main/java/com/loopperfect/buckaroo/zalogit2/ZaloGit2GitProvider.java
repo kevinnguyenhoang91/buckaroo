@@ -41,7 +41,12 @@ public final class ZaloGit2GitProvider implements GitProvider {
     @Override
     public URI zipURL(final Identifier owner, final Identifier project, final GitCommitHash commit) {
         try {
-            return new URI("https://zalogit2.zing.vn/" + owner.name + "/" + project.name + "/repository/archive.zip?ref=" + commit.hash.substring(0, 40));
+            String zalogit2PrivateKey = System.getenv("ZALOGIT2_PRIVATEKEY");
+            if (zalogit2PrivateKey != null) {
+                return new URI("https://zalogit2.zing.vn/" + owner.name + "/" + project.name + "/repository/archive.zip?ref=" + commit.hash.substring(0, 40) + "&private_token=" + zalogit2PrivateKey);
+            } else {
+                return new URI("https://zalogit2.zing.vn/" + owner.name + "/" + project.name + "/repository/archive.zip?ref=" + commit.hash.substring(0, 40));
+            }
         } catch (final URISyntaxException e) {
             throw new RuntimeException(e);
         }
