@@ -58,6 +58,7 @@ fabric.properties
 buck-out/
 .buckd/
 .buckconfig.local
+.buckconfig.auto
 
 .idea/
 pom.xml

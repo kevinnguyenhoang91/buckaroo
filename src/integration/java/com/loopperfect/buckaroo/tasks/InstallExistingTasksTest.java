@@ -41,13 +41,13 @@ public final class InstallExistingTasksTest {
         InstallExistingTasks.installExistingDependenciesInWorkingDirectory(fs).toList().blockingGet();
 
         assertTrue(Files.exists(fs.getPath(".buckconfig")));
-        assertTrue(Files.exists(fs.getPath(".buckconfig.local")));
+        assertTrue(Files.exists(fs.getPath(".buckconfig.auto")));
 
         final Path dependencyFolder = fs.getPath(
             "buckaroo", "official", "loopperfect", "valuable");
 
         assertTrue(Files.exists(dependencyFolder.resolve(".buckconfig")));
-        assertTrue(Files.exists(dependencyFolder.resolve(".buckconfig.local")));
+        assertTrue(Files.exists(dependencyFolder.resolve(".buckconfig.auto")));
         assertTrue(Files.exists(dependencyFolder.resolve("BUCK")));
     }
 
