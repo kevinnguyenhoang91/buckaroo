@@ -26,7 +26,7 @@ public final class BitBucketGitProvider implements GitProvider {
     public String gitURL(final Identifier owner, final Identifier project) {
         Preconditions.checkNotNull(owner);
         Preconditions.checkNotNull(project);
-        return "git@bitbucket.org:" + owner.name + "/" + project.name + ".git";
+        return "https://bitbucket.org/" + owner.name + "/" + project.name + ".git";
     }
 
     @Override

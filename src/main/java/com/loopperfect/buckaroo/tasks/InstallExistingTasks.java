@@ -104,15 +104,15 @@ public final class InstallExistingTasks {
             // Touch .buckconfig
             CommonTasks.touchFile(dependencyDirectory.resolve(".buckconfig")).toObservable(),
 
-            // Generate .buckconfig.local
+            // Generate .buckconfig.auto
             CommonTasks.writeFile(
                 generateBuckConfigLocal(
-                    dependencyDirectory.resolve(".buckconfig.local"),
+                    dependencyDirectory.resolve(".buckconfig.auto"),
                     projectDirectory,
                     lock.origin.dependencies.stream()
                         .map(i -> i.identifier)
                         .collect(ImmutableList.toImmutableList())),
-                dependencyDirectory.resolve(".buckconfig.local"),
+                dependencyDirectory.resolve(".buckconfig.auto"),
                 true).toObservable(),
 
             // Mark the installation as complete
@@ -170,16 +170,16 @@ public final class InstallExistingTasks {
                         // Touch the .buckconfig file
                         CommonTasks.touchFile(projectDirectory.resolve(".buckconfig")).toObservable(),
 
-                        // Generate the .buckconfig.local file
+                        // Generate the .buckconfig.auto file
                         CommonTasks.writeFile(
                             generateBuckConfigLocal(
-                                projectDirectory.resolve(".buckconfig.local"),
+                                projectDirectory.resolve(".buckconfig.auto"),
                                 projectDirectory,
                                 event.locks.entries()
                                     .stream()
                                     .map(x -> x.identifier)
                                     .collect(ImmutableList.toImmutableList())),
-                            projectDirectory.resolve(".buckconfig.local"),
+                            projectDirectory.resolve(".buckconfig.auto"),
                             true).toObservable(),
 
                         CommonTasks.readProjectFile(projectDirectory.resolve("buckaroo.json"))

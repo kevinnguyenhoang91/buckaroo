@@ -24,7 +24,7 @@ public final class GitHubGitProvider implements GitProvider {
 
     @Override
     public String gitURL(final Identifier owner, final Identifier project) {
-        return "git@github.com:" + owner.name + "/" + project.name + ".git";
+        return "https://github.com/" + owner.name + "/" + project.name + ".git";
     }
 
     @Override

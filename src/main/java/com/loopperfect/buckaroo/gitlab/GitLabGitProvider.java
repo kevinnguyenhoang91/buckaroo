@@ -26,7 +26,7 @@ public final class GitLabGitProvider implements GitProvider {
     public String gitURL(final Identifier owner, final Identifier project) {
         Preconditions.checkNotNull(owner);
         Preconditions.checkNotNull(project);
-        return "git@gitlab.com:" + owner.name + "/" + project.name + ".git";
+        return "https://gitlab.com/" + owner.name + "/" + project.name + ".git";
     }
 
     @Override
