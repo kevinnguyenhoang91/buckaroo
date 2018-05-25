@@ -19,6 +19,6 @@ public final class QuickstartTasksTest {
 
         assertTrue(Files.exists(fs.getPath("buckaroo.json")));
         assertTrue(Files.exists(fs.getPath(".buckconfig")));
-        assertTrue(Files.exists(fs.getPath("BUCKAROO_DEPS")));
+        assertTrue(Files.exists(fs.getPath("BUCKAROO_DEPS.bzl")));
     }
 }

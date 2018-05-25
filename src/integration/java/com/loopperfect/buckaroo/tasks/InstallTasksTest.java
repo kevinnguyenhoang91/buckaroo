@@ -71,13 +71,13 @@ public final class InstallTasksTest {
 
         latch2.await(5000L, TimeUnit.MILLISECONDS);
 
-        assertTrue(Files.exists(fs.getPath("BUCKAROO_DEPS")));
+        assertTrue(Files.exists(fs.getPath("BUCKAROO_DEPS.bzl")));
 
         final Path dependencyFolder = fs.getPath(
             "buckaroo", "official", "loopperfect", "valuable");
 
         assertTrue(Files.exists(dependencyFolder.resolve("BUCK")));
-        assertTrue(Files.exists(dependencyFolder.resolve("BUCKAROO_DEPS")));
+        assertTrue(Files.exists(dependencyFolder.resolve("BUCKAROO_DEPS.bzl")));
 
 //        TestUtils.printTree(fs.getPath("/"));
 
@@ -108,13 +108,13 @@ public final class InstallTasksTest {
 
         final List<Event> events = InstallTasks.installDependencyInWorkingDirectory(fs, partialDependencies).toList().blockingGet();
 
-        assertTrue(Files.exists(fs.getPath("BUCKAROO_DEPS")));
+        assertTrue(Files.exists(fs.getPath("BUCKAROO_DEPS.bzl")));
 
         final Path dependencyFolder = fs.getPath(
             "buckaroo", "github", "njlr", "test-lib-a");
 
         assertTrue(Files.exists(dependencyFolder.resolve("BUCK")));
-        assertTrue(Files.exists(dependencyFolder.resolve("BUCKAROO_DEPS")));
+        assertTrue(Files.exists(dependencyFolder.resolve("BUCKAROO_DEPS.bzl")));
     }
 
     @Test
@@ -141,13 +141,13 @@ public final class InstallTasksTest {
 
         InstallTasks.installDependencyInWorkingDirectory(fs, partialDependencies).toList().blockingGet();
 
-        assertTrue(Files.exists(fs.getPath("BUCKAROO_DEPS")));
+        assertTrue(Files.exists(fs.getPath("BUCKAROO_DEPS.bzl")));
 
         final Path dependencyFolder = fs.getPath(
             "buckaroo", "github", "njlr", "test-lib-d");
 
         assertTrue(Files.exists(dependencyFolder.resolve("BUCK")));
-        assertTrue(Files.exists(dependencyFolder.resolve("BUCKAROO_DEPS")));
+        assertTrue(Files.exists(dependencyFolder.resolve("BUCKAROO_DEPS.bzl")));
     }
 
     @Test
@@ -207,7 +207,7 @@ public final class InstallTasksTest {
                 "buckaroo", "official", "loopperfect", "valuable");
 
             assertTrue(Files.exists(dependencyFolder.resolve("BUCK")));
-            assertTrue(Files.exists(dependencyFolder.resolve("BUCKAROO_DEPS")));
+            assertTrue(Files.exists(dependencyFolder.resolve("BUCKAROO_DEPS.bzl")));
         }
 
         // Install neither
@@ -226,10 +226,10 @@ public final class InstallTasksTest {
                 "buckaroo", "official", "loopperfect", "neither");
 
             assertTrue(Files.exists(dependencyFolder.resolve("BUCK")));
-            assertTrue(Files.exists(dependencyFolder.resolve("BUCKAROO_DEPS")));
+            assertTrue(Files.exists(dependencyFolder.resolve("BUCKAROO_DEPS.bzl")));
         }
 
-        assertTrue(Files.exists(fs.getPath("BUCKAROO_DEPS")));
+        assertTrue(Files.exists(fs.getPath("BUCKAROO_DEPS.bzl")));
     }
 
     @Test

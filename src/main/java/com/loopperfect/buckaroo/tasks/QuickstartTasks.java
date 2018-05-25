@@ -51,16 +51,16 @@ public final class QuickstartTasks {
             CommonTasks.touchFile(fs.getPath(projectDirectory.toString(), ".buckconfig"))
                 .toObservable(),
 
-            // Generate an empty BUCKAROO_DEPS
+            // Generate an empty BUCKAROO_DEPS.bzl
             Single.fromCallable(() -> CommonTasks.generateBuckarooDeps(ImmutableList.of()))
                 .flatMap(content ->
                     CommonTasks.writeFile(
                         content,
-                        fs.getPath(projectDirectory.toString(), "BUCKAROO_DEPS"),
+                        fs.getPath(projectDirectory.toString(), "BUCKAROO_DEPS.bzl"),
                         false))
                 .toObservable()
                 .cast(Event.class)
-                .onErrorReturnItem(Notification.of("BUCKAROO_DEPS already exists!")),
+                .onErrorReturnItem(Notification.of("BUCKAROO_DEPS.bzl already exists!")),
 
             // Create the project directories
             CommonTasks.createDirectory(fs.getPath(projectDirectory.toString(), projectIdentifier.name))

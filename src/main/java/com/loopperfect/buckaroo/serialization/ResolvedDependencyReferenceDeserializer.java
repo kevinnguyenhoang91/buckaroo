@@ -21,10 +21,10 @@ public final class ResolvedDependencyReferenceDeserializer implements JsonDeseri
         try {
             final String raw = json.getAsJsonPrimitive().getAsString();
 
-            final int split = raw.indexOf("//:");
+            final int split = raw.indexOf("//");
 
             final String rawCell = raw.substring(0, split).trim();
-            final String rawTarget = raw.substring(split + 3).trim();
+            final String rawTarget = raw.substring(split + 2).trim();
 
             final String rawIdentifier = CharMatcher.is('.').countIn(rawCell) == 2 ?
                 rawCell.replaceFirst("[.]", "+").replaceFirst("[.]", "/") :

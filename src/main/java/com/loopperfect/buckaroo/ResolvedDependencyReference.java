@@ -16,9 +16,15 @@ public final class ResolvedDependencyReference {
     }
 
     public String encode() {
+        String connector = "//:";
+       
+        if (target.orElse(identifier.recipe.name).contains(":")) {
+            connector = "//";
+        }
+
         return identifier.source.map(x -> x.name + ".").orElse("") +
             identifier.organization.name + "." +
-            identifier.recipe.name + "//:" +
+            identifier.recipe.name + connector +
             target.orElse(identifier.recipe.name);
     }
 

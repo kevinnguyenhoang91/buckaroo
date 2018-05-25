@@ -72,7 +72,7 @@ public final class InstallExistingTasks {
                 .map(x -> CommonTasks.downloadRemoteFile(fs, x, buckFilePath))
                 .orElse(Observable.empty());
 
-        final Path buckarooDepsFilePath = fs.getPath(target.toString(), "BUCKAROO_DEPS");
+        final Path buckarooDepsFilePath = fs.getPath(target.toString(), "BUCKAROO_DEPS.bzl");
         final Observable<Event> writeBuckarooDeps = Single.fromCallable(() ->
             CommonTasks.generateBuckarooDeps(resolvedDependency.dependencies))
             .flatMap(content -> CommonTasks.writeFile(
@@ -186,15 +186,15 @@ public final class InstallExistingTasks {
                             .result()
                             .flatMapObservable(
 
-                            // Generate the BUCKAROO_DEPS file
+                            // Generate the BUCKAROO_DEPS.bzl file
                             (Project project) -> Single.fromCallable(() -> CommonTasks.generateBuckarooDeps(event.locks.entries()
                                 .stream()
                                 .map(i -> ResolvedDependencyReference.of(i.identifier, i.origin.target))
-                                // The top-level BUCKAROO_DEPS should only contain immediate dependencies
+                                // The top-level BUCKAROO_DEPS.bzl should only contain immediate dependencies
                                 .filter(x -> project.dependencies.requires(x.identifier))
                                 .collect(ImmutableList.toImmutableList())))
                                 .flatMap(content -> CommonTasks.writeFile(
-                                    content, projectDirectory.resolve("BUCKAROO_DEPS"), true))
+                                    content, projectDirectory.resolve("BUCKAROO_DEPS.bzl"), true))
                                 .toObservable()
                                 .cast(Event.class)
                         )
