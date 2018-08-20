@@ -23,7 +23,7 @@ public final class InstallExistingTasks {
     }
 
     private static Path buckarooDirectory(final Path projectDirectory) {
-        return projectDirectory.resolve("buckaroo");
+        return projectDirectory.resolve("external");
     }
 
     private static Path dependencyFolder(final Path buckarooDirectory, final RecipeIdentifier identifier) {
