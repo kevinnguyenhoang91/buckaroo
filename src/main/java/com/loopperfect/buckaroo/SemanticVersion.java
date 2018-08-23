@@ -12,8 +12,9 @@ public final class SemanticVersion implements Comparable<SemanticVersion> {
     public final int minor;
     public final int patch;
     public final int increment;
+    public final String key;
 
-    private SemanticVersion(final int major, final int minor, final int patch, final int increment) {
+    private SemanticVersion(final int major, final int minor, final int patch, final int increment, final String key) {
 
         Preconditions.checkArgument(major >= 0, "major version must be non-negative");
         Preconditions.checkArgument(minor >= 0, "minor version must be non-negative");
@@ -24,6 +25,7 @@ public final class SemanticVersion implements Comparable<SemanticVersion> {
         this.minor = minor;
         this.patch = patch;
         this.increment = increment;
+        this.key = key;
     }
 
     public int compareTo(final SemanticVersion other) {
@@ -45,7 +47,12 @@ public final class SemanticVersion implements Comparable<SemanticVersion> {
             return patchComparison;
         }
 
-        return Integer.compare(increment, other.increment);
+        int incrementComparison = Integer.compare(increment, other.increment);
+        if (incrementComparison != 0) {
+            return incrementComparison;
+        }
+
+        return String.compare(increment, other.increment);
     }
 
     public String encode() {

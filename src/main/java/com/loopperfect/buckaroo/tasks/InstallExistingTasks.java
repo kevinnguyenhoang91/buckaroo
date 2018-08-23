@@ -14,6 +14,9 @@ import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.util.stream.Collectors;
 
+import org.apache.commons.io.FileUtils;
+import java.io.File;
+
 import static com.google.common.collect.ImmutableList.toImmutableList;
 
 public final class InstallExistingTasks {
@@ -23,7 +26,13 @@ public final class InstallExistingTasks {
     }
 
     private static Path buckarooDirectory(final Path projectDirectory) {
-        return projectDirectory.resolve("external");
+        String buckarooDirName = "buckaroo";
+        String customDirName = System.getenv("ZBUCKAROO_FOLDER_NAME");
+        if (customDirName != null) {
+            buckarooDirName = customDirName;
+        }
+
+        return projectDirectory.resolve(buckarooDirName);
     }
 
     private static Path dependencyFolder(final Path buckarooDirectory, final RecipeIdentifier identifier) {
@@ -58,7 +67,7 @@ public final class InstallExistingTasks {
         final Observable<Event> downloadSourceCode = Single.fromCallable(() -> Files.exists(target))
             .flatMapObservable(exists -> {
                 if (exists) {
-                    return Observable.empty();
+                    FileUtils.deleteDirectory(new File(target.toString()));
                 }
                 return resolvedDependency.source.join(
                     gitCommit -> CacheTasks.cloneAndCheckoutUsingCache(gitCommit, target),

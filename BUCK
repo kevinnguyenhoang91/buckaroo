@@ -8,6 +8,13 @@ maven_jar(
 )
 
 maven_jar(
+  name = 'commons-io',
+  id = 'commons-io:commons-io:2.6',
+  src_sha1 = '2566800dc841d9d2c5a0d34d807e45d4107dbbdf',
+  bin_sha1 = '815893df5f31da2ece4040fe0a12fd44b577afaf',
+)
+
+maven_jar(
   name = 'guava',
   id = 'com.google.guava:guava:21.0',
   src_sha1 = 'b9ed26b8c23fe7cd3e6b463b34e54e5c6d9536d5',
@@ -162,6 +169,7 @@ java_library(
   ]),
   deps = [
     ':javatuples',
+    ':commons-io',
     ':rxjava',
     ':reactive-streams',
     ':okio',
